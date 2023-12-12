@@ -1,0 +1,9 @@
+.ant-list-item:hover {
+  box-shadow: 0 0 8px blueviolet;
+  border: "solid white 5px";
+  border-radius: "8px";
+}
+
+.text-white {
+  color: white;
+}
