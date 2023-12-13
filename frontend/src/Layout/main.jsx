@@ -4,9 +4,10 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import AppSider from "../components/SideBar/AppSider";
 import AppHeader from "../components/Header/AppHeader";
 import "../styles/App.css";
-// antd
-import { Layout } from "antd";
+// helper functions
 import { fetchData } from "../helper";
+// antd imports
+import { Layout } from "antd";
 const { Content } = Layout;
 
 // loader
@@ -17,7 +18,7 @@ export function mainLoader() {
 }
 
 const Main = () => {
-  const { userName, password } = useLoaderData();
+  const { userName } = useLoaderData();
 
   return (
     <Layout>
@@ -35,7 +36,7 @@ const Main = () => {
         <Layout
           style={{
             position: "relative",
-            // background: "hsl(183 74% 44%)",
+            background: "hsl(183 74% 44%)",
             // minHeight: "200vh",
           }}
         >

@@ -1,19 +1,17 @@
 // RRD Imports
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Layout
-import Main, { mainLoader } from './Layout/main'
-
+import Main, { mainLoader } from "./Layout/main";
 
 // Main Pages
-import Dashboard, { dashboardLoader } from './pages/Dashboard'
-import Budget from './pages/Budget'
-import Income from './pages/Income'
-import Expenses from './pages/Expenses'
-import Login from './pages/Login'
-import Transactions from './pages/Transactions'
-import Error from './pages/Error'
-
+import Dashboard, { dashboardLoader } from "./pages/Dashboard";
+import Budget from "./pages/Budget";
+import Income from "./pages/Income";
+import Expenses from "./pages/Expenses";
+import Login from "./pages/Login";
+import Transactions from "./pages/Transactions";
+import Error from "./pages/Error";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +21,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "",
+        index: true,
         element: <Dashboard />,
         loader: dashboardLoader,
       },
@@ -43,18 +41,16 @@ const router = createBrowserRouter([
         path: "transactions",
         element: <Transactions />,
       },
-      {
-        path: "login",
-        element: <Login />,
-      }
-    ]
-  }
-])
+    ],
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+]);
 
 const App = () => {
-  return (
-    <RouterProvider router={router} />
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default App
+export default App;

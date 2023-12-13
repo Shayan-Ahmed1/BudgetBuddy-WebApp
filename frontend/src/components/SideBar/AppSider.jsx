@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+// RRD imports
+import { Link } from "react-router-dom";
+// antd imports
 import {
   DesktopOutlined,
   WalletFilled,
@@ -8,7 +11,6 @@ import {
   // SmileOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
 const { Sider } = Layout;
 
 const AppSider = () => {
@@ -26,9 +28,9 @@ const AppSider = () => {
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
     >
-      <Menu theme="dark" defaultSelectedKeys={[""]} mode="inline">
+      <Menu theme="dark" defaultSelectedKeys={["dashboard"]} mode="inline">
         <Menu.Item key="dashboard" icon={<DesktopOutlined />}>
-          <Link to="/"> Dashboard</Link>
+          <Link to="/">Dashboard</Link>
         </Menu.Item>
         <Menu.Item key="income" icon={<WalletFilled />}>
           <Link to="/income">Income</Link>

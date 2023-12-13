@@ -1,9 +1,11 @@
-import React from "react";
-// import { NavLink } from 'react-router-dom';
-import DropdownButton from "../Button/DropdownButton";
-import { Layout, Menu } from "antd";
+// RRD imports
 import { Link } from "react-router-dom";
+// components
+import DropdownButton from "../Button/DropdownButton";
+// antd
+import { Layout, Menu } from "antd";
 const { Header } = Layout;
+
 
 const AppHeader = ({ userName }) => {
   return (
@@ -16,10 +18,9 @@ const AppHeader = ({ userName }) => {
         width: "100%",
         display: "flex",
         justifyContent: "space-between",
-        // borderBottom: "solid 1px white",
       }}
     >
-      <Link to="/">
+      <Link to="/" aria-label="Go to home">
         <Menu
           theme="dark"
           mode="horizontal"
@@ -28,7 +29,6 @@ const AppHeader = ({ userName }) => {
             fontFamily: "calibre",
             marginLeft: "20px",
           }}
-          // className="ant-list-item"
         >
           <img
             src={"https://cdn-icons-png.flaticon.com/128/10149/10149443.png"}
