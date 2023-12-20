@@ -12,10 +12,7 @@
 
 /* error pages */
 .error {
-  -ms-grid-row-align: center;
-  -ms-grid-column-align: center;
   place-self: center;
-  display: -ms-grid;
   display: grid;
   place-items: center;
   place-content: center;
@@ -47,10 +44,30 @@
 
 /* dashboard */
 .dashboard {
-  display: -ms-grid;
   display: grid;
   gap: 32px;
   place-items: start;
   width: 100%;
+}
+
+/* budgets */
+.budgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-left: 30px;
+}
+
+.budget {
+  display: grid;
+  flex: 1 1 32.2%;
+  max-width: 400px;
+  box-shadow: 0 0 8px black;  
+  border-radius: 25px;
+  border: 2px solid whitesmoke;
+  padding: calc(25px / 1.5) calc(25px / 1.2);
+  gap: 12px;
+  text-decoration: none;
+  color: "white";
 }
 

@@ -16,7 +16,7 @@ import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Budget, { budgetAction, budgetLoader } from "./pages/Budget";
 import Income, { incomeAction, incomeLoader } from "./pages/Income";
 import Expenses, { expenseAction, expenseLoader } from "./pages/Expenses";
-import Transactions from "./pages/Transactions";
+import Transactions, { transactionLoader } from "./pages/Transactions";
 import Error from "./pages/Error";
 import LoginPage from "./pages/loginPage";
 import Home, { homeAction } from "./pages/Home";
@@ -57,6 +57,7 @@ const router = createBrowserRouter([
       {
         path: "transactions",
         element: <Transactions />,
+        loader: transactionLoader,
       },
       {
         path: "home",

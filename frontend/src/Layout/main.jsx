@@ -37,7 +37,8 @@ const Main = () => {
             position: "relative",
             // background: "hsl(183 74% 44%)",
             backgroundColor: "#0071BC",
-            minHeight: "150vh",
+            minHeight: "250vh",
+            // height: "100%",
           }}
         >
           <Content

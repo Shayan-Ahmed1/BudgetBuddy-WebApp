@@ -457,6 +457,9 @@ select {
 }
 
 .budget {
+    --accent: 183 74% 44%;
+    --muted: 183 8% 55%;
+    --round-lg: 25px;
     --backdrop: var(--accent);
     display: -ms-grid;
     display: grid;

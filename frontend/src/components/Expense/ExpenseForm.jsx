@@ -99,7 +99,7 @@ const ExpenseForm = ({ budgets }) => {
             />
           </label>
         </div>
-        <div className="grid-md" hidden={budgets.length === 1}>
+        <div className="grid-md">
           <label htmlFor="newExpenseBudget" style={labelStyle}>
             <h4>Budget Category</h4>
             <select
@@ -109,15 +109,16 @@ const ExpenseForm = ({ budgets }) => {
               style={inputStyle}
             >
               {
-                budgets
-                  .sort((a, b) => a.createdAt - b.createdAt)
-                  .map((budget) => {
-                    return (
-                      <option key={budget.id} value={budget.name}>
-                        {budget.name}
-                      </option>
-                    )
-                  })
+                budgets && (
+                  budgets
+                    .sort((a, b) => a.createdAt - b.createdAt)
+                    .map((budget) => {
+                      return (
+                        <option key={budget.id} value={budget.name}>
+                          {budget.name}
+                        </option>
+                      )
+                    }))
               }
             </select>
           </label>

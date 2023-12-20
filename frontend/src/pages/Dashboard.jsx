@@ -30,19 +30,19 @@ export async function dashboardAction({ request }) {
 const Dashboard = () => {
   const { userName, incomes, budgets, expenses } = useLoaderData();
   let totalIncomeAmount = 0
-  incomes.map((income) => {
+  incomes && incomes.length > 0 ? (incomes.map((income) => {
     return totalIncomeAmount = totalIncomeAmount + income.amount
-  })
+  })) : totalIncomeAmount = 0
 
   let totalBudgetAmount = 0
-  budgets.map((budget) => {
+  budgets && budgets.length > 0 ? (budgets.map((budget) => {
     return totalBudgetAmount = totalBudgetAmount + budget.amount
-  })
+  })) : totalBudgetAmount = 0
 
   let totalExpenseAmount = 0
-  expenses.map((expense) => {
+  expenses && expenses.length > 0 ? (expenses.map((expense) => {
     return totalExpenseAmount = totalExpenseAmount + expense.amount
-  })
+  })) : totalExpenseAmount = 0
 
   const boxStyle = {
     display: "grid",
@@ -59,7 +59,7 @@ const Dashboard = () => {
       <h1 style={{ marginTop: "25px", color: "lightgray", marginLeft: "50px" }}>
         Welcome Back, {userName}
       </h1>
-      <div className="flex-md" style={{ marginTop: "100px", gap: "20px", marginLeft: "50px"}} >
+      <div className="flex-md" style={{ marginTop: "100px", gap: "20px", marginLeft: "50px" }} >
         <Link to="/income">
           <div style={boxStyle} className="box">
             <h3 >Total Income Amount</h3>
@@ -72,13 +72,13 @@ const Dashboard = () => {
             <h2>{totalBudgetAmount} rs</h2>
           </div>
         </Link>
-        <Link to="/expense">
+        <Link to="/expenses">
           <div style={boxStyle} className="box">
             <h3>Total Expense Amount</h3>
             <h2>{totalExpenseAmount} rs</h2>
           </div>
         </Link>
-        <Link to="/savings">
+        <Link to="/dashboard">
           <div style={boxStyle} className="box">
             <h3>Total Savings Currently</h3>
             <h2>{totalIncomeAmount - totalExpenseAmount} rs</h2>

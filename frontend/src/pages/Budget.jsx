@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import BudgetForm from "../components/Budget/BudgetForm";
 import { toast } from "react-toastify";
 import BudgetTable from "../components/Budget/BudgetTable";
+import BudgetItem from "../components/Budget/BudgetItem";
 
 // loader
 export function budgetLoader() {
@@ -30,18 +31,42 @@ const Budget = () => {
   const { userName, budgets } = useLoaderData()
   return (
     <div style={{ maxHeight: "200vh" }}>
-      <div className="grid-md">
-        <div className="flex-md" style={{ position: "relative", marginLeft: "200px" }} >
-          <div style={{ marginTop: "15px" }}>
-            <h1>Track your Budgets, <span style={{ color: "lightgray" }}>{userName}</span></h1>
-            <BudgetForm />
-          </div>
-          <div>
-            <BudgetTable budgets={budgets} />
-          </div>
-        </div >
-      </div>
-    </div>
+      {
+        budgets && budgets.length > 0 ?
+          (
+            <div className="grid-md">
+              <div className="flex-md" style={{ position: "relative", marginLeft: "200px" }} >
+                <div style={{ marginTop: "15px" }}>
+                  <h1>Track your Budgets, <span style={{ color: "lightgray" }}>{userName}</span></h1>
+                  <BudgetForm />
+                </div>
+                <div>
+                  <BudgetTable budgets={budgets} />
+                </div>
+              </div>
+              <div style={{ color: "whitesmoke", marginLeft: "200px", marginTop: "15px" }}>
+                <h2 style={{ margin: "25px" }}>Existing Budgets</h2>
+                <div className="budgets">
+                  {
+                    budgets.map((budget) => (
+                      <BudgetItem key={budget.key} budget={budget} />))
+                  }
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex-md" >
+              <div style={{ marginTop: "15px" }}>
+                <h1>Track your Budgets, <span style={{ color: "lightgray" }}>{userName}</span></h1>
+                <BudgetForm />
+              </div>
+              <div style={{ color: "lightgray", marginTop: "275px" }}>
+                <h2> Created you first budget</h2>
+              </div>
+            </div>
+          )
+      }
+    </div >
 
 
   );
