@@ -6,17 +6,17 @@ const userSchema = new Schema(
     {
         name: {
             type: String,
-            required: true,
             trim: true,
             maxLength: 20,
+            required: [true, "Please add your name"],
         },
         username: {
             type: String,
-            required: true,
-            unique: true,
             lowercase: true,
             trim: true,
             maxLength: 20,
+            required: [true, "Please add the user name"],
+            unique: [true, "Username already taken"],
             validate: {
                 validator: function (value) {
                     // Check if the username contains spaces
@@ -27,8 +27,7 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            required: true,
-            maxLength: 20,
+            required: [true, "Please add the user password"],
             trim: true,
         },
     },

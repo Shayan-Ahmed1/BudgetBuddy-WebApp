@@ -1,106 +1,61 @@
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-//@desc Retrieve all users
-//@route GET /api/users
-//@access public
-const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({}).sort({ createdAt: -1 });
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({ error: 'Server Error' })
-    }
-};
 
-//@desc Create a User
-//@route POST api/users
+//@desc Register User
+//@route POST api/users/register
 //@access public
-const createUser = async (req, res) => {
+const registerUser = async (req, res) => {
     const { name, username, password } = req.body;
 
-    if (!username || !password) {
+    if (!name || !username || !password) {
         res.status(400);
         throw new Error("All fields are required!");
     }
 
     try {
-        const user = await User.create({ name, username, password });
-        res.status(200).json(user);
+        const userAvailable = await User.findOne({ username });
+        if (userAvailable) {
+            res.status(400);
+            throw new Error("User already registered!");
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log("Hashed Password", hashedPassword);
+        const user = await User.create({
+            name,
+            username,
+            password: hashedPassword,
+        });
+        console.log(`User created ${user}`);
+        if (user) {
+            res.status(201).json({ _id: user.id, username: user.username })
+        } else {
+            res.status(404);
+            throw new Error("User data is not valid")
+        }
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
 };
 
-//@desc Retrieve a single user
-//@route Get /api/users/:id
+//@desc Login User
+//@route POST api/users/login
 //@access public
-const getUser = async (req, res) => {
-    const { id } = req.params;
+const loginUser = async (req, res) => {
+    res.json({ message: "login user" });
+}
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: "No such user record" });
-    }
-
-    const user = await User.findById(id);
-
-    if (!user) {
-        return res.status(404).json({ error: "No such user record" });
-    }
-
-    res.status(200).json(user);
-};
-
-//@desc Update an user
-//@route PUT /api/user/:id
+//@desc Current User Info
+//@route GET api/users/current
 //@access public
-const updateUser = async (req, res) => {
-    const { id } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: "No such user record" });
-    }
-
-    try {
-        const user = await User.findByIdAndUpdate((id), { ...req.body }, { returnDocument: 'after' });
-
-        if (!user) {
-            return res.status(404).json({ error: "No such user record" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(404).json({ error: error.message })
-    }
-};
-
-//@desc Delete a user
-//@route DELETE /api/user/:id
-//@access public
-const deleteUser = async (req, res) => {
-    const { id } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: "No such user record" });
-    }
-
-    try {
-        const user = await User.findByIdAndDelete((id), { returnDocument: 'after' });
-
-        if (!user) {
-            return res.status(404).json({ error: "No such user record" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        return res.status(404).json({ error: "No such user record" });
-    }
-};
+const currentUser = async (req, res) => {
+    res.json({ message: "Current user" });
+}
 
 module.exports = {
-    getUsers,
-    createUser,
-    getUser,
-    updateUser,
-    deleteUser,
-};
+    registerUser,
+    loginUser,
+    currentUser,
+}
+
