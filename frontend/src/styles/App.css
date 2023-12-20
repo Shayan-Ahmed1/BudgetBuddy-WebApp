@@ -1,9 +1,56 @@
 .ant-list-item:hover {
   box-shadow: 0 0 8px blueviolet;
-  border: "solid white 5px";
-  border-radius: "8px";
+}
+
+.box:hover {
+  box-shadow: 0 0 8px black;
 }
 
 .text-white {
   color: white;
 }
+
+/* error pages */
+.error {
+  -ms-grid-row-align: center;
+  -ms-grid-column-align: center;
+  place-self: center;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  gap: 24px;
+  padding-block: 32px;
+  text-align: center;
+}
+
+.flex-md {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  gap: 5px;
+}
+
+.grid-md {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+
+.form-wrapper {
+  display: grid;
+  gap: 5px;
+  padding: 24px;
+  border-radius: 15px;
+  border: 1px solid white;
+}
+
+/* dashboard */
+.dashboard {
+  display: -ms-grid;
+  display: grid;
+  gap: 32px;
+  place-items: start;
+  width: 100%;
+}
+

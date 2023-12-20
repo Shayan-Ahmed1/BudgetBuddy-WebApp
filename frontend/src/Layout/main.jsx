@@ -13,8 +13,7 @@ const { Content } = Layout;
 // loader
 export function mainLoader() {
   const userName = fetchData("userName");
-  const password = fetchData("password");
-  return { userName, password };
+  return { userName };
 }
 
 const Main = () => {
@@ -32,12 +31,13 @@ const Main = () => {
           left: 0,
         }}
       >
-        <AppSider />
+        <AppSider userName={userName} />
         <Layout
           style={{
             position: "relative",
-            background: "hsl(183 74% 44%)",
-            // minHeight: "200vh",
+            // background: "hsl(183 74% 44%)",
+            backgroundColor: "#0071BC",
+            minHeight: "150vh",
           }}
         >
           <Content

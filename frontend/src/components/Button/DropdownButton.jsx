@@ -1,5 +1,5 @@
 // RRD imports
-import { Link } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 // antd imports
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
@@ -20,32 +20,25 @@ const items = [
           // marginLeft: "5px"
         }}
       >
-        {/* <Form
-          method="post"
-          action="/login"
-        // onSubmit={(event) => {
-        //   if (!confirm("Do you want to log out?")) {
-
-        //   }
-        // }}
-        > */}
-        <Link to="/login">
-          <Button
+        <Form method="post" action="/login">
+          <button
             style={{
-              color: "white",
+              padding: "8px 16px",
               fontSize: "16px",
-              height: 35,
+              cursor: "pointer",
+              border: "1px solid #1890ff",
+              color: "white",
+              backgroundColor: "#1890ff",
+              borderRadius: "4px",
+              // transition: background - color 0.3s, color 0.3s, border- color 0.3s;
             }}
             type="primary"
             className="ant-list-item"
           >
             <span>Log Out</span>
-          </Button>
-        </Link>
-
-        {/* </Form> */}
-
-      </div>
+          </button>
+        </Form>
+      </div >
     ),
   },
 ];

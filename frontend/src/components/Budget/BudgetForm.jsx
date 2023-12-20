@@ -2,7 +2,7 @@ import { CurrencyDollarIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useRef } from 'react'
 import { useFetcher } from 'react-router-dom'
 
-const IncomeForm = () => {
+const BudgetForm = () => {
     const fetcher = useFetcher()
     const isSubmitting = fetcher.state === "submitting"
 
@@ -55,17 +55,17 @@ const IncomeForm = () => {
 
     return (
         <div className='form-wrapper' style={formStyle}>
-            <h2 style={{ textAlign: "center" }}>Add Income</h2>
+            <h2 style={{ textAlign: "center" }}>Create Budget</h2>
             <fetcher.Form method="POST" className="grid-md" ref={formRef}>
                 <div className="grid-md">
-                    <label htmlFor="newIncome" style={labelStyle}>
-                        <h4>Income Name</h4>
+                    <label htmlFor="newBudget" style={labelStyle}>
+                        <h4>Budget Name</h4>
                         <input
                             type="text"
-                            name="newIncome"
-                            id="newIncome"
+                            name="newBudget"
+                            id="newBudget"
                             style={inputStyle}
-                            placeholder="e.g: Salary"
+                            placeholder="e.g: Groceries"
                             required
                             className='ant-list-item'
                             ref={focusRef}
@@ -74,38 +74,38 @@ const IncomeForm = () => {
 
                 </div>
                 <div className="grid-md">
-                    <label htmlFor="newIncomeAmount" style={labelStyle}>
-                        <h4>Income Amount</h4>
+                    <label htmlFor="newBudgetAmount" style={labelStyle}>
+                        <h4>Budget Amount</h4>
                         <input
                             type="number"
                             step="0.01"
-                            name="newIncomeAmount"
-                            id="newIncomeAmount"
+                            name="newBudgetAmount"
+                            id="newBudgetAmount"
                             style={inputStyle}
-                            placeholder="e.g: 5000"
+                            placeholder="e.g: 1500rs"
                             required
                         />
                     </label>
                 </div>
                 <div className="grid-md">
-                    <label htmlFor="newIncomeDate" style={labelStyle}>
+                    <label htmlFor="newBudgetDate" style={labelStyle}>
                         <h4>Date</h4>
                         <input
                             type="date"
-                            name="newIncomeDate"
-                            id="newIncomeDate"
+                            name="newBudgetDate"
+                            id="newBudgetDate"
                             style={inputStyle}
                             required
                         />
                     </label>
                 </div>
-                <input type="hidden" name="_action" value="createIncome" />
+                <input type="hidden" name="_action" value="createBudget" />
                 <button type="submit" style={buttonStyle} disabled={isSubmitting}>
                     {
                         isSubmitting ? <span>Submitting..</span>
                             : (
                                 <>
-                                    <span style={{ marginRight: 10, padding: 10 }}>Create Income</span>
+                                    <span style={{ marginRight: 10, padding: 10 }}>Create Budget</span>
                                     <CurrencyDollarIcon width={25} />
                                 </>
                             )
@@ -117,4 +117,4 @@ const IncomeForm = () => {
     )
 }
 
-export default IncomeForm
+export default BudgetForm

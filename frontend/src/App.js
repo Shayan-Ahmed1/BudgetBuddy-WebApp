@@ -1,17 +1,26 @@
 // RRD Imports
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+// library
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Layout
 import Main, { mainLoader } from "./Layout/main";
 
+// Actions
+import { logoutAction } from "./actions/logout";
+
 // Main Pages
-import Dashboard, { dashboardLoader } from "./pages/Dashboard";
-import Budget from "./pages/Budget";
-import Income from "./pages/Income";
-import Expenses from "./pages/Expenses";
-import Login from "./pages/Login";
+import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
+import Budget, { budgetAction, budgetLoader } from "./pages/Budget";
+import Income, { incomeAction, incomeLoader } from "./pages/Income";
+import Expenses, { expenseAction, expenseLoader } from "./pages/Expenses";
 import Transactions from "./pages/Transactions";
 import Error from "./pages/Error";
+import LoginPage from "./pages/loginPage";
+import Home, { homeAction } from "./pages/Home";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -21,36 +30,64 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        index: true,
+        path: "dashboard",
         element: <Dashboard />,
         loader: dashboardLoader,
+        action: dashboardAction,
+        errorElement: <Error />,
       },
       {
         path: "budget",
         element: <Budget />,
+        loader: budgetLoader,
+        action: budgetAction,
       },
       {
         path: "income",
         element: <Income />,
+        loader: incomeLoader,
+        action: incomeAction,
       },
       {
         path: "expenses",
         element: <Expenses />,
+        loader: expenseLoader,
+        action: expenseAction,
       },
       {
         path: "transactions",
         element: <Transactions />,
       },
+      {
+        path: "home",
+        element: <Home />,
+        action: homeAction,
+        // action: loginPageAction,
+        errorElement: <Error />,
+      },
+      {
+        path: "signup",
+        element: <SignUp />,
+        // action: logoutAction,
+        // action: loginPageAction,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+        action: logoutAction,
+        // action: loginPageAction,
+      },
     ],
-  },
-  {
-    path: "login",
-    element: <Login />,
   },
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <div className="App">
+      <RouterProvider router={router} />;
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default App;

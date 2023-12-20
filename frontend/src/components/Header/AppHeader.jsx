@@ -20,7 +20,7 @@ const AppHeader = ({ userName }) => {
         justifyContent: "space-between",
       }}
     >
-      <Link to="/" aria-label="Go to home">
+      <Link to="/dashboard" aria-label="Go to home">
         <Menu
           theme="dark"
           mode="horizontal"
@@ -50,7 +50,11 @@ const AppHeader = ({ userName }) => {
           </span>
         </Menu>
       </Link>
-      <DropdownButton userName={userName} />
+      {
+        userName && (
+          <DropdownButton userName={userName} />
+        )
+      }
     </Header>
   );
 };
