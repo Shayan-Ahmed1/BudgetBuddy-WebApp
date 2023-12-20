@@ -1,12 +1,13 @@
 const User = require("../models/userModel");
-const mongoose = require("mongoose");
+const asyncHandler = require("express-async-handler")
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 
 //@desc Register User
 //@route POST api/users/register
 //@access public
-const registerUser = async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
     const { name, username, password } = req.body;
 
     if (!name || !username || !password) {
@@ -14,44 +15,65 @@ const registerUser = async (req, res) => {
         throw new Error("All fields are required!");
     }
 
-    try {
-        const userAvailable = await User.findOne({ username });
-        if (userAvailable) {
-            res.status(400);
-            throw new Error("User already registered!");
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        console.log("Hashed Password", hashedPassword);
-        const user = await User.create({
-            name,
-            username,
-            password: hashedPassword,
-        });
-        console.log(`User created ${user}`);
-        if (user) {
-            res.status(201).json({ _id: user.id, username: user.username })
-        } else {
-            res.status(404);
-            throw new Error("User data is not valid")
-        }
-    } catch (error) {
-        res.status(404).json({ error: error.message });
+    const userAvailable = await User.findOne({ username });
+
+    if (userAvailable) {
+        res.status(400);
+        throw new Error("User already registered!");
     }
-};
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Hashed Password", hashedPassword);
+    const user = await User.create({
+        name,
+        username,
+        password: hashedPassword,
+    });
+    console.log(`User created ${user}`);
+    if (user) {
+        res.status(201).json({ _id: user.id, username: user.username })
+    } else {
+        res.status(404);
+        throw new Error("User data is not valid")
+    }
+})
 
 //@desc Login User
 //@route POST api/users/login
 //@access public
-const loginUser = async (req, res) => {
-    res.json({ message: "login user" });
-}
+const loginUser = asyncHandler(async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        res.status(400);
+        throw new Error("All fields are mandatory!");
+    }
+
+    const user = await User.findOne({ username });
+    // compare password with hashPassword
+    if (user && (await bcrypt.compare(password, user.password))) {
+        const accessToken = jwt.sign({
+            user: {
+                username: user.username,
+                id: user.id,
+            },
+        },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "15m" }
+        );
+        res.status(200).json({ accessToken })
+    } else {
+        res.status(401)
+        throw new Error("Credentials are invalid");
+    }
+});
 
 //@desc Current User Info
 //@route GET api/users/current
-//@access public
-const currentUser = async (req, res) => {
-    res.json({ message: "Current user" });
-}
+//@access private
+const currentUser = asyncHandler(async (req, res) => {
+    res.json(req.user);
+})
 
 module.exports = {
     registerUser,

@@ -6,8 +6,11 @@ const {
   updateIncome,
   deleteIncome,
 } = require("../controllers/incomeController");
+const validateToken = require("../middleware/validateTokenHandler");
 
 const router = express.Router();
+
+router.use(validateToken);
 
 // Retrieve all income records
 router.route("/").get(getIncomes);

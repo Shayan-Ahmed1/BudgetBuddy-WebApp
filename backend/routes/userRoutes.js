@@ -4,6 +4,7 @@ const {
     loginUser,
     currentUser,
 } = require("../controllers/userController");
+const validateToken = require("../middleware/validateTokenHandler");
 
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 
 // Current User
-router.route("/current").get(currentUser);
+router.route("/current").get(validateToken, currentUser);
 
 module.exports = router;

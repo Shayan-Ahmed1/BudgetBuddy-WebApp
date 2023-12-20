@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 
 //@desc Retrieve all incomes
 //@route GET /api/incomes
-//@access public
+//@access private
 const getIncomes = async (req, res) => {
   try {
-    const incomes = await Income.find({}).sort({ createdAt: -1 });
+    const incomes = await Income.find({ user_id: req.user.id }).sort({ createdAt: -1 });
     res.status(200).json(incomes);
   } catch (error) {
     res.status(404).json({ error: 'Server Error' })
@@ -15,7 +15,7 @@ const getIncomes = async (req, res) => {
 
 //@desc Create an income
 //@route POST api/incomes
-//@access public
+//@access private
 const createIncome = async (req, res) => {
   const { name, amount, category, description, date } = req.body;
 
@@ -29,7 +29,7 @@ const createIncome = async (req, res) => {
   }
 
   try {
-    const income = await Income.create({ name, amount, category, description, date, });
+    const income = await Income.create({ name, amount, category, description, date, user_id: req.user.id });
     res.status(200).json(income);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -38,7 +38,7 @@ const createIncome = async (req, res) => {
 
 //@desc Retrieve a single income
 //@route Get /api/incomes/:id
-//@access public
+//@access private
 const getIncome = async (req, res) => {
   const { id } = req.params;
 
@@ -57,7 +57,7 @@ const getIncome = async (req, res) => {
 
 //@desc Update an income
 //@route PUT /api/income/:id
-//@access public
+//@access private
 const updateIncome = async (req, res) => {
   const { id } = req.params;
 
@@ -65,16 +65,22 @@ const updateIncome = async (req, res) => {
     return res.status(404).json({ error: "No such income record" });
   }
 
+  const income = await Income.findById(id);
+
+  if (!income) {
+    return res.status(404).json({ error: "No such income record" });
+  }
+
+  if (income.user_id.toString() !== req.user.id) {
+    req.status(403).json({ message: "User won't have permission to update other user incomes" });
+    throw new Error("User won't have permission to update other user incomes");
+  }
+
   try {
     const income = await Income.findByIdAndUpdate((id), { ...req.body }, { returnDocument: 'after' });
 
-    // income = await Income.findById(id);
-
-    if (!income) {
-      return res.status(404).json({ error: "No such income record" });
-    }
-
     res.status(200).json(income);
+
   } catch (error) {
     res.status(404).json({ error: error.message })
   }
@@ -82,7 +88,7 @@ const updateIncome = async (req, res) => {
 
 //@desc Delete an income
 //@route DELETE an /api/income/:id
-//@access public
+//@access private
 const deleteIncome = async (req, res) => {
   const { id } = req.params;
 
