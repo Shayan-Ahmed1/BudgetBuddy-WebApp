@@ -4,6 +4,7 @@ const cors = require("cors");
 const { db_connect } = require("./db/db_connect");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes")
+const userRoutes = require("./routes/userRoutes")
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(cors());
 // routes
 app.use("/api/incomes", incomeRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/users", userRoutes);
+
 
 // server
 const server = () => {

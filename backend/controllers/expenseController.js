@@ -68,7 +68,7 @@ const updateExpense = async (req, res) => {
     }
 
     try {
-        const expense = await Expense.findByIdAndUpdate(id, { ...req.body })
+        const expense = await Expense.findByIdAndUpdate(id, { ...req.body }, { returnDocument: 'after' })
         if (!expense) {
             return res.status(404).json({ error: "No such income record" });
         }
@@ -89,7 +89,7 @@ const deleteExpense = async (req, res) => {
     }
 
     try {
-        const expense = await Expense.findByIdAndDelete(id)
+        const expense = await Expense.findByIdAndDelete((id), { returnDocument: 'after' })
 
         if (!expense) {
             return res.status(404).json({ message: 'No such expense' })
