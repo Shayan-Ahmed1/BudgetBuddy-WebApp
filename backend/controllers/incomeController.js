@@ -72,8 +72,8 @@ const updateIncome = async (req, res) => {
   }
 
   if (income.user_id.toString() !== req.user.id) {
-    req.status(403).json({ message: "User won't have permission to update other user incomes" });
-    throw new Error("User won't have permission to update other user incomes");
+    req.status(403).json({ message: "User don't have permission to update other user incomes" });
+    throw new Error("User don't have permission to update other user incomes");
   }
 
   try {
@@ -96,12 +96,19 @@ const deleteIncome = async (req, res) => {
     return res.status(404).json({ error: "No such income record" });
   }
 
+  const income = await Income.findById(id);
+
+  if (!income) {
+    return res.status(404).json({ error: "No such income record" });
+  }
+
+  if (income.user_id.toString() !== req.user.id) {
+    req.status(403).json({ message: "User don't have permission to update other user incomes" });
+    throw new Error("User don't have permission to update other user incomes");
+  }
+
   try {
     const income = await Income.findByIdAndDelete((id), { returnDocument: 'after' });
-
-    if (!income) {
-      return res.status(404).json({ error: "No such income record" });
-    }
 
     res.status(200).json(income);
   } catch (error) {
