@@ -8,7 +8,7 @@ const BudgetItem = ({ budget }) => {
                 <h3>{name}</h3>
                 <p>{amount} Budgeted</p>
             </div>
-            <progress max={amount} value="100">
+            <progress max={amount} value="200">
 
             </progress>
             <div className="progress-text">
