@@ -6,21 +6,7 @@ const errorHandler = (err, req, res, next) => {
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
       res.json({
-        title: "Validation Error",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.UNAUTHORIZED:
-      res.json({
-        title: "Unauthorized",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.FORBIDDEN:
-      res.json({
-        title: "Forbidden request",
+        title: "Validation Failed",
         message: err.message,
         stackTrace: err.stack,
       });
@@ -31,7 +17,21 @@ const errorHandler = (err, req, res, next) => {
         message: err.message,
         stackTrace: err.stack,
       });
-      break;
+    // break;
+    case constants.UNAUTHORIZED:
+      res.json({
+        title: "Unauthorized",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+    // break;
+    case constants.FORBIDDEN:
+      res.json({
+        title: "Forbidden Request",
+        message: err.message,
+        stackTrace: err.stack,
+      });
+    // break;
     case constants.SERVER_ERROR:
       res.json({
         title: "Server Error",

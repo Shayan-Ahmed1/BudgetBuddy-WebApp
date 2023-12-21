@@ -14,12 +14,12 @@ const PORT = process.env.PORT || 5000;
 // middlewares
 app.use(express.json());
 app.use(cors());
-app.use(errorHandler);
 
 // routes
 app.use("/api/incomes", incomeRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/users", userRoutes);
+app.use(errorHandler); // For handling errors using express-async-handler
 
 // server
 const server = () => {
