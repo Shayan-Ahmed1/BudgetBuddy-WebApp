@@ -6,10 +6,12 @@ const mongoose = require("mongoose");
 //@access private
 const getIncomes = async (req, res) => {
   try {
-    const incomes = await Income.find({ user_id: req.user.id }).sort({ createdAt: -1 });
+    const incomes = await Income.find({ user_id: req.user.id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(incomes);
   } catch (error) {
-    res.status(404).json({ error: 'Server Error' })
+    res.status(404).json({ error: "Server Error" });
   }
 };
 
@@ -29,7 +31,14 @@ const createIncome = async (req, res) => {
   }
 
   try {
-    const income = await Income.create({ name, amount, category, description, date, user_id: req.user.id });
+    const income = await Income.create({
+      name,
+      amount,
+      category,
+      description,
+      date,
+      user_id: req.user.id,
+    });
     res.status(200).json(income);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -72,17 +81,22 @@ const updateIncome = async (req, res) => {
   }
 
   if (income.user_id.toString() !== req.user.id) {
-    req.status(403).json({ message: "User don't have permission to update other user incomes" });
+    req.status(403).json({
+      message: "User don't have permission to update other user incomes",
+    });
     throw new Error("User don't have permission to update other user incomes");
   }
 
   try {
-    const income = await Income.findByIdAndUpdate((id), { ...req.body }, { returnDocument: 'after' });
+    const income = await Income.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { returnDocument: "after" }
+    );
 
     res.status(200).json(income);
-
   } catch (error) {
-    res.status(404).json({ error: error.message })
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -103,12 +117,16 @@ const deleteIncome = async (req, res) => {
   }
 
   if (income.user_id.toString() !== req.user.id) {
-    req.status(403).json({ message: "User don't have permission to update other user incomes" });
+    req.status(403).json({
+      message: "User don't have permission to update other user incomes",
+    });
     throw new Error("User don't have permission to update other user incomes");
   }
 
   try {
-    const income = await Income.findByIdAndDelete((id), { returnDocument: 'after' });
+    const income = await Income.findByIdAndDelete(id, {
+      returnDocument: "after",
+    });
 
     res.status(200).json(income);
   } catch (error) {

@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { db_connect } = require("./db/db_connect");
 const incomeRoutes = require("./routes/incomeRoutes");
-const expenseRoutes = require("./routes/expenseRoutes")
+const expenseRoutes = require("./routes/expenseRoutes");
 const userRoutes = require("./routes/userRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -14,13 +14,12 @@ const PORT = process.env.PORT || 5000;
 // middlewares
 app.use(express.json());
 app.use(cors());
-app.use(errorHandler)
+app.use(errorHandler);
 
 // routes
 app.use("/api/incomes", incomeRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/users", userRoutes);
-
 
 // server
 const server = () => {
