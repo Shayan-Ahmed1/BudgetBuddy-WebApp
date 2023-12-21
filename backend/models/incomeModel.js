@@ -13,7 +13,7 @@ const incomeSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 50,
+      maxLength: 20,
     },
     amount: {
       type: Number,
@@ -38,7 +38,7 @@ const incomeSchema = new Schema(
     description: {
       type: String,
       require: true,
-      maxLength: 50,
+      maxLength: 100,
       trim: true,
     },
   },

@@ -10,6 +10,7 @@ const validateToken = require("../middleware/validateTokenHandler");
 
 const router = express.Router();
 
+// Middleware (Access Validation Check)
 router.use(validateToken);
 
 // Retrieve all income records
