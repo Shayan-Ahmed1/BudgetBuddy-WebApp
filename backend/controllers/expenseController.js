@@ -107,16 +107,20 @@ const deleteExpense = async (req, res) => {
     return res.status(404).json({ message: "No such expense" });
   }
 
-  const expense = await Expense.findByIdAndDelete(id, {
-    returnDocument: "after",
-  });
+  try {
+    const expense = await Expense.findByIdAndDelete(id, {
+      returnDocument: "after",
+    });
 
-  if (!expense) {
-    res.status(404);
-    throw new Error("Expense not found");
+    if (!expense) {
+      res.status(404);
+      throw new Error("Expense not found");
+    }
+
+    res.status(200).json(expense);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
-
-  res.status(200).json(expense);
 };
 
 module.exports = {
