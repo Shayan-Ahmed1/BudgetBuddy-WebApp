@@ -7,7 +7,9 @@ const Expense = require("../models/expenseModel");
 //@access private
 const getExpenses = asyncHandler(async (req, res) => {
   try {
-    const expenses = await Expense.find({}).sort({ createdAt: -1 });
+    const expenses = await Expense.find({ user_id: req.user.id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(expenses);
   } catch (error) {
     res.status(404).json({ error: error.message });
