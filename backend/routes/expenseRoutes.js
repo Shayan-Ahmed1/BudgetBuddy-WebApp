@@ -6,8 +6,12 @@ const {
   updateExpense,
   deleteExpense,
 } = require("../controllers/expenseController");
+const validateToken = require("../middleware/validateTokenHandler");
 
 const router = express.Router();
+
+// Middleware (Access Validation Control)
+router.use(validateToken);
 
 // Retrieve all expenses
 router.route("/").get(getExpenses);

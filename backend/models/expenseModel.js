@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const expenseSchema = new Schema(
   {
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     name: {
       type: String,
       required: true,
@@ -34,7 +39,7 @@ const expenseSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 50,
+      maxLength: 100,
     },
   },
   { timestamps: true }

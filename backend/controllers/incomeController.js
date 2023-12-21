@@ -16,15 +16,15 @@ const getIncomes = asyncHandler(async (req, res) => {
 //@route POST api/incomes
 //@access private
 const createIncome = asyncHandler(async (req, res) => {
-  const { name, amount, category, description, date } = req.body;
+  const { name, amount, date, category, description } = req.body;
 
-  if (!name || !amount || !category || !description || !date) {
+  if (!name || !amount || !date || !category || !description) {
     res.status(400);
     throw new Error("All fields are required!");
   }
 
   if (amount <= 0 || !amount === "number") {
-    return res.status(404).json({ error: "Amount must be a positive number" });
+    return res.status(400).json({ error: "Amount must be a positive number" });
   }
 
   try {
