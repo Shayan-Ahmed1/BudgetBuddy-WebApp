@@ -27,16 +27,19 @@ const createIncome = asyncHandler(async (req, res) => {
     return res.status(404).json({ error: "Amount must be a positive number" });
   }
 
-  const income = await Income.create({
-    name,
-    amount,
-    category,
-    description,
-    date,
-    user_id: req.user.id,
-  });
-
-  res.status(201).json(income);
+  try {
+    const income = await Income.create({
+      name,
+      amount,
+      date,
+      category,
+      description,
+      user_id: req.user.id,
+    });
+    res.status(200).json(income);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 });
 
 //@desc Retrieve a single income
