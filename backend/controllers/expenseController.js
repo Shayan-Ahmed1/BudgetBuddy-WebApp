@@ -19,7 +19,7 @@ const getExpenses = asyncHandler(async (req, res) => {
 //@desc Create a new expense
 //@route POST /api/expenses
 //access private
-const createExpense = async (req, res) => {
+const createExpense = asyncHandler(async (req, res) => {
   const { name, amount, date, category, description } = req.body;
 
   if (!name || !amount || !date || !category || !description) {
@@ -44,7 +44,7 @@ const createExpense = async (req, res) => {
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
-};
+});
 
 //@desc Retrieve a single expense
 //@route GET /api/expenses/:id
@@ -100,28 +100,24 @@ const updateExpense = asyncHandler(async (req, res) => {
 //@desc Delete an existing expense
 //@route DELETE /api/expenses/:id
 //@access private
-const deleteExpense = async (req, res) => {
+const deleteExpense = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "No such expense" });
   }
 
-  try {
-    const expense = await Expense.findByIdAndDelete(id, {
-      returnDocument: "after",
-    });
+  const expense = await Expense.findByIdAndDelete(id, {
+    returnDocument: "after",
+  });
 
-    if (!expense) {
-      res.status(404);
-      throw new Error("Expense not found");
-    }
-
-    res.status(200).json(expense);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
+  if (!expense) {
+    res.status(404);
+    throw new Error("Expense not found");
   }
-};
+
+  res.status(200).json(expense);
+});
 
 module.exports = {
   getExpenses,
